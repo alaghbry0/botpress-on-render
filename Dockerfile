@@ -1,11 +1,9 @@
-# استخدم الصورة الرسمية لـ Botpress
 FROM botpress/server:latest
 
-# تفعيل وضع الإنتاج
+# أضف هذه المتغيرات البيئية
+ENV BP_PORT=10000
+ENV BP_EXTERNAL_URL=https://your-service-name.onrender.com
+ENV BP_JWT_SECRET=your_secure_jwt_secret_here
 ENV BP_PRODUCTION=true
 
-# Render يستخدم متغير البيئة PORT، لذلك لا نحدد بورت ثابت
-EXPOSE 3000
-
-# شغّل السيرفر
 CMD ["./bp"]

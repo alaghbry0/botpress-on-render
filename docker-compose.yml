@@ -1,10 +1,11 @@
-version: '3'
 services:
   botpress:
     image: botpress/server:latest
     ports:
-      - "3000:3000"
+      - "10000:10000"  # غيّر المنفذ هنا
     environment:
       - BP_HOST=0.0.0.0
-      - DATABASE_URL=${DATABASE_URL}  # سيتم تعبئتها من ملف .env
-    # احذف قسم depends_on إذا كنت تستخدم قاعدة بيانات خارجية (Neon.tech)
+      - BP_PORT=10000
+      - DATABASE_URL=${DATABASE_URL}
+      - BP_EXTERNAL_URL=${BP_EXTERNAL_URL}
+      - BP_JWT_SECRET=${BP_JWT_SECRET}
