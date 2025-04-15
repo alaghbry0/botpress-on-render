@@ -1,11 +1,59 @@
+version: '3'
+
 services:
   botpress:
-    image: botpress/server:latest
-    ports:
-      - "10000:10000"  # غيّر المنفذ هنا إذا رغبت؛ تأكد أن BP_PORT متطابق
+    image: botpress/server
+    command: /botpress/bp
+    expose:
+      - 3000
     environment:
-      - BP_CONFIG_HTTPSERVER_HOST=0.0.0.0
-      - BP_CONFIG_HTTPSERVER_PORT=10000
-      - BP_EXTERNAL_URL=${BP_EXTERNAL_URL}
-      - BP_JWT_SECRET=${BP_JWT_SECRET}
-      - DATABASE_URL=${DATABASE_URL}
+      - DATABASE_URL=postgres://exaado:exaado@postgres:5435/exaado_db
+      - REDIS_URL=redis://redis:6379?password=exaado
+      - BP_MODULE_NLU_DUCKLINGURL=http://botpress_lang:8000
+      - BP_MODULE_NLU_LANGUAGESOURCES=[{"endpoint":"http://botpress_lang:3100"}]
+      - CLUSTER_ENABLED=true
+      - BP_PRODUCTION=true
+      - BPFS_STORAGE=database
+      - BP_EXTERNAL_URL=https://botpress-2r85.onrender.com
+    depends_on:
+      - botpress_lang
+      - postgres
+      - redis
+    volumes:
+      - botpressdata:/botpress/data
+    ports:
+      - "3000:3000"
+
+  botpress_lang:
+    image: botpress-lang
+    command: bash -c "./duckling -p 8000 & ./bp lang --langDir /botpress/lang --port 3100"
+    expose:
+      - 3100
+      - 8000
+    volumes:
+      - botpressdata:/botpress/lang
+
+  postgres:
+    image: postgres:11.2-alpine
+    expose:
+      - 5435
+    environment:
+      PGPORT: 5435
+      POSTGRES_DB: exaado_db
+      POSTGRES_PASSWORD: exaado
+      POSTGRES_USER: exaado
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  redis:
+    image: redis:5.0.5-alpine
+    expose:
+      - 6379
+    command: redis-server --requirepass exaado
+    volumes:
+      - redisdata:/data
+
+volumes:
+  pgdata:
+  redisdata:
+  botpressdata:
