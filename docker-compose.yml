@@ -7,10 +7,10 @@ services:
     expose:
       - 3000
     environment:
-      - DATABASE_URL=postgres://exaado:exaado@postgres:5435/exaado_db
-      - REDIS_URL=redis://redis:6379?password=exaado
-      - BP_MODULE_NLU_DUCKLINGURL=http://botpress_lang:8000
-      - BP_MODULE_NLU_LANGUAGESOURCES=[{"endpoint":"http://botpress_lang:3100"}]
+      - DATABASE_URL=postgres://exaado:exaado_pw@exaado-postgres:5432/botpress_db
+      - REDIS_URL=redis://:exaado_redis_pw@exaado-redis:6379
+      - BP_MODULE_NLU_DUCKLINGURL=http://exaado-lang:8000
+      - BP_MODULE_NLU_LANGUAGESOURCES=[{"endpoint":"http://exaado-lang:3100"}]
       - CLUSTER_ENABLED=true
       - BP_PRODUCTION=true
       - BPFS_STORAGE=database
