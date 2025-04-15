@@ -1,6 +1,6 @@
 FROM botpress/server:latest
 
-# أضف هذه المتغيرات البيئية
+# إعداد المتغيرات البيئية الافتراضية
 ENV BP_PORT=10000
 ENV BP_EXTERNAL_URL=https://your-service-name.onrender.com
 ENV BP_JWT_SECRET=your_secure_jwt_secret_here

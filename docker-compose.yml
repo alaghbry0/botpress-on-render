@@ -2,10 +2,10 @@ services:
   botpress:
     image: botpress/server:latest
     ports:
-      - "10000:10000"  # غيّر المنفذ هنا
+      - "10000:10000"  # غيّر المنفذ هنا إذا رغبت؛ تأكد أن BP_PORT متطابق
     environment:
-      - BP_HOST=0.0.0.0
-      - BP_PORT=10000
-      - DATABASE_URL=${DATABASE_URL}
+      - BP_CONFIG_HTTPSERVER_HOST=0.0.0.0
+      - BP_CONFIG_HTTPSERVER_PORT=10000
       - BP_EXTERNAL_URL=${BP_EXTERNAL_URL}
       - BP_JWT_SECRET=${BP_JWT_SECRET}
+      - DATABASE_URL=${DATABASE_URL}
